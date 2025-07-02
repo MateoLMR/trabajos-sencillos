@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class ejercicio2 {
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        // Solicitar al usuario el número de tareas
+        System.out.print("Ingrese el número de tareas para el día: ");
+        int numTareas = scanner.nextInt();
+
+        //instanciar el arreglo
+        int[][] tareas = new int[1][numTareas];
+
+        // Ingresar el tiempo estimado para cada tarea
+        for (int i = 0; i < numTareas; i++) {
+            System.out.print("Ingrese el tiempo estimado (en minutos) para la tarea " + (i + 1) + ": ");
+            tareas[0][i] = scanner.nextInt();
+        }
+
+        // Calcular el tiempo total estimado
+        int tiempTotal = 0;
+        for (int i = 0; i < numTareas; i++) {
+            tiempTotal += tareas[0][i];
+        }
+        System.out.println("\nEl tiempo total estimado para todas las tareas es: " + tiempTotal + " minutos");
+
+        // Encontrar la tarea que requiere más tiempo
+        int maxTiemp = tareas[0][0];
+        int tarMaxTiemp = 0;
+        for (int i = 1; i < numTareas; i++) {
+            if (tareas[0][i] > maxTiemp) {
+                maxTiemp = tareas[0][i];
+                tarMaxTiemp = i;
+            }
+        }
+        System.out.println("La tarea que requiere más tiempo es la tarea " + (tarMaxTiemp + 1) + " con " + maxTiemp + " minutos.");
+    }
+
+}
