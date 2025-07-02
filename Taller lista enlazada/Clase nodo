@@ -1,0 +1,12 @@
+class Nodo {
+
+    int dato;
+    Nodo siguiente;
+
+    public Nodo(int dato) {
+        //un constructor, el this es un apuntador para poder usar el dato en otra clase
+        this.dato = dato;
+        this.siguiente = null;
+    }
+}
+
