@@ -1,0 +1,117 @@
+import java.util.Scanner;
+
+public class Gestioncola {
+
+    String[] Gestionclientes;
+    int frente = 0, Finalcola = 0, tamaño;
+    
+    public Gestioncola(int tamaño){
+        this.tamaño = tamaño;
+        this.Gestionclientes = new String[tamaño];
+    }
+
+    public void agregarclientes(String clientes) {
+        if (Finalcola < tamaño) {
+            Gestionclientes[Finalcola] = clientes;
+            Finalcola++;
+            System.out.println("Cliente agregado: " + clientes);
+        } else {
+            System.out.println("La cola esta llena, no se pueden agregar mas clientes");
+        }
+    }
+
+    public void atenderclientes() {
+        if (frente < Finalcola) {
+            String clienteAtend = Gestionclientes[frente];
+            System.out.println("Cliente atendido " + clienteAtend);
+            for (int i = 0; i < Finalcola; i++) {
+                Gestionclientes[i] = Gestionclientes[i + 1];
+            }
+            Finalcola--;
+        } else {
+            System.out.println("No hay clientes en la cola");
+        }
+    }
+
+    public void Atendvarclientes(int cantidad) {
+        if (cantidad <= (Finalcola - frente)) {
+            for (int i = 0; i < cantidad; i++) {
+                atenderclientes();
+            }
+        } else {
+            System.out.println("No hay suficientes clientes en la cola para atender " + cantidad);
+        }
+    }
+
+    public void mostrarCantidadClientes() {
+        System.out.println("Cantidad de clientes en la cola: " + (Finalcola - frente));
+    }
+
+    public void mostrarClientes() {
+        if (frente < Finalcola) {
+            System.out.print("Clientes en la cola: " +Finalcola);
+            for (int i = frente; i < Finalcola; i++) {
+                System.out.print(Gestionclientes[i] + (i < Finalcola - 1 ? " " : ""));
+            }
+            System.out.println();
+        } else {
+            System.out.println("No hay clientes en la cola.");
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Ingrese numero maximo de clientes:  ");
+        int tamaño = in.nextInt();
+        in.nextLine();
+
+        Gestioncola gestion = new Gestioncola(tamaño);
+        
+        while (true) {
+            System.out.println("Menú:");
+            System.out.println("1. Agregar cliente a la cola");
+            System.out.println("2. Atender siguiente cliente");
+            System.out.println("3. Atender un número específico de clientes");
+            System.out.println("4. Mostrar cantidad de clientes en la cola");
+            System.out.println("5. Mostrar todos los clientes en la cola");
+            System.out.println("6. Salir");
+
+            System.out.print("Seleccione una opción: ");
+            int opcion = in.nextInt();
+            in.nextLine();
+
+            switch (opcion) {
+                case 1:
+                    System.out.println("Ingrese nombre del cliente: ");
+                    String clientes = in.nextLine();
+                    gestion.agregarclientes(clientes);
+                    break;
+                case 2:
+                    gestion.atenderclientes();
+                    break;
+                case 3:
+                    System.out.print("Ingrese el número de clientes a atender: ");
+                    int cantidad = in.nextInt();
+                    gestion.Atendvarclientes(cantidad);
+                    break;
+                case 4:
+                    gestion.mostrarCantidadClientes();
+                    break;
+                case 5:
+                    gestion.mostrarClientes();
+                    break;
+                case 6:
+                    System.out.println("Saliendo del programa...");
+                    in.close();
+                    return;
+                default:
+                    System.out.println("Opción no válida. Intente nuevamente.");
+                    break;
+            }
+        }
+    }
+
+}
+
