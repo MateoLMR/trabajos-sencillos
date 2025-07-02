@@ -1,0 +1,212 @@
+import javax.swing.JOptionPane;
+
+public class Libro {
+
+    //Atributos
+    String Titulo, ISBN, Autor;
+    boolean Disponibilidad;
+
+    //Crear el arreglo 
+    String[] Biblioteca;
+    int ultlibro = 0, capacidad;
+
+    //Crear El constructor
+    public Libro(int capacidad) {
+        this.capacidad = capacidad;
+        this.Biblioteca = new String[capacidad];
+    }
+
+    //Metodos
+    public void Prestar(String tituloPrestar) {
+        if (Disponibilidad) {
+            Disponibilidad = false;
+            JOptionPane.showMessageDialog(null, "El libro" + Titulo + "ha sido prestado");
+        } else {
+            JOptionPane.showMessageDialog(null, "El libro ya ha sido prestado o no esta disponible");
+        }
+    }
+
+    public void Devolver(String tituloDevolver) {
+
+        if (!Disponibilidad) {
+            Disponibilidad = true;
+            JOptionPane.showMessageDialog(null, "el libro " + Titulo + " ha sido devuelto");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "el libro " + Titulo + " nunca fue prestado - Disponible");
+        }
+    }
+
+    public void Disponibilidad(String tituloComprobar) {
+        if (Disponibilidad) {
+            JOptionPane.showMessageDialog(null, "el libro " + Titulo + " esta disponible");
+        } else {
+            JOptionPane.showMessageDialog(null, "el libro " + Titulo + " no esta disponible");
+        }
+    }
+
+    public void Agregar() {
+        if (ultlibro < capacidad) {
+            String titulo = JOptionPane.showInputDialog("Ingrese el Título del libro:");
+            String autor = JOptionPane.showInputDialog("Ingrese el Autor del libro:");
+            String isbn = JOptionPane.showInputDialog("Ingrese el Código ISBN del libro:");
+
+            if (titulo != null && autor != null && isbn != null && !titulo.isEmpty() && !autor.isEmpty() && !isbn.isEmpty()) {
+                Biblioteca[ultlibro] = "Título: " + titulo + " | Autor: " + autor + " | ISBN: " + isbn;
+                ultlibro++;
+                JOptionPane.showMessageDialog(null, "El libro ha sido agregado con éxito");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: Debe llenar todos los campos");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "La Biblioteca está llena");
+        }
+    }
+
+    public void Eliminar(String titulo) {
+        for (int i = 0; i < ultlibro; i++) {
+            if (Biblioteca[i] != null && Biblioteca[i].contains(titulo)) {
+                JOptionPane.showMessageDialog(null, "El libro " + titulo + " ha sido eliminado");
+                // Eliminamos el libro desplazando los elementos
+                for (int j = i; j < ultlibro - 1; j++) {
+                    Biblioteca[j] = Biblioteca[j + 1];
+                }
+                Biblioteca[ultlibro - 1] = null; // Borramos el último espacio
+                ultlibro--; // Reducimos la cantidad de libros
+                return; // Salimos si lo encontró
+            }
+        }
+        JOptionPane.showMessageDialog(null, "El libro " + titulo + " no fue encontrado");
+    }
+
+    public void BuscarAutor(String autor) {
+        for (int i = 0; i < ultlibro; i++) {
+            if (Biblioteca[i] != null && Biblioteca[i].contains(autor)) {
+                JOptionPane.showMessageDialog(null, "El autor " + autor + " fue encontrado\n" + Biblioteca[i]);
+                return; // Se sale si lo encuentra
+            }
+        }
+        JOptionPane.showMessageDialog(null, "El autor " + autor + " no tiene libros registrados");
+    }
+
+    public void BuscarTitulo(String titulo) {
+        for (int i = 0; i < ultlibro; i++) {
+            if (Biblioteca[i] != null && Biblioteca[i].contains(titulo)) {
+                JOptionPane.showMessageDialog(null, "El libro " + titulo + " fue encontrado\n" + Biblioteca[i]);
+                return; // Si lo encuentra, se sale del método
+            }
+        }
+        JOptionPane.showMessageDialog(null, "El libro " + titulo + " no fue encontrado");
+    }
+
+    public void Mostlibros() {
+        if (ultlibro == 0) {
+            JOptionPane.showMessageDialog(null, "No hay Libros");
+        } else {
+            String lista = "";
+            for (int i = 0; i < ultlibro; i++) {
+                lista += Biblioteca[i] + "\n";
+            }
+            JOptionPane.showMessageDialog(null, "Los Libros son:\n" + lista);
+        }
+    }
+
+    public static void main(String[] args) {
+        //Llammamos la clase
+        Libro biblioteca = new Libro(20);
+
+        int option;
+
+        //El menu de la biblioteca
+        do {
+            String menu = """
+            Opciones disponibles:
+            1: Agregar libro
+            2: Eliminar libro
+            3: Buscar libro por Título
+            4: Buscar libro por Autor
+            5: Prestar libro
+            6: Ver disponibilidad
+            7: Devolver libro
+            8: Mostrar los libros
+            9: Salir
+            """;
+
+            String opcion = JOptionPane.showInputDialog(null, menu + "Menú de Biblioteca", JOptionPane.QUESTION_MESSAGE);
+            option = Integer.parseInt(opcion);
+
+            switch (option) {
+
+                case 1: {
+                    biblioteca.Agregar();
+                    break;
+                }
+                case 2: {
+                    String titulo = JOptionPane.showInputDialog("Ingrese el Título del libro a eliminar:");
+                    biblioteca.Eliminar(titulo);
+                    break;
+                }
+                case 3: {
+                    String titulo = JOptionPane.showInputDialog("Ingrese el Título del libro:");
+                    biblioteca.BuscarTitulo(titulo);
+                    break;
+                }
+                case 4: {
+                    String autor = JOptionPane.showInputDialog("Ingrese el Autor del libro:");
+                    biblioteca.BuscarAutor(autor);
+                    break;
+                }
+                case 5: {
+                    String tituloPrestar;
+                    tituloPrestar = (JOptionPane.showInputDialog("Ingrese el titulo del libro a prestar"));
+
+                    biblioteca.BuscarTitulo(tituloPrestar);
+                    if (tituloPrestar != null) {
+                        biblioteca.Prestar(tituloPrestar);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se encontró el libro");
+                    }
+                    break;
+                }
+                case 6: {
+                    String tituloComprobar;
+                    tituloComprobar = (JOptionPane.showInputDialog("Ingrese el titulo del libro a verificar"));
+
+                    biblioteca.BuscarTitulo(tituloComprobar);
+                    if (tituloComprobar != null) {
+                        biblioteca.Disponibilidad(tituloComprobar);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se encontró el libro");
+                    }
+                    break;
+                }
+                case 7: {
+                    String tituloDevolver;
+                    tituloDevolver = (JOptionPane.showInputDialog("Ingrese el titulo del libro a devolver"));
+
+                    biblioteca.BuscarTitulo(tituloDevolver);
+                    if (tituloDevolver != null) {
+                        biblioteca.Disponibilidad(tituloDevolver);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se encontró el libro");
+                    }
+                    break;
+                }
+                case 8: {
+                    biblioteca.Mostlibros();
+                    break;
+                }
+                case 9: {
+                    JOptionPane.showMessageDialog(null, "Saliendo del programa.....");
+                    System.exit(0);
+                    return;
+                }
+                default:
+                    JOptionPane.showMessageDialog(null, "Opcion no valida");
+                    break;
+            }
+        } while (option != 9);
+        System.exit(0);
+    }
+
+}
