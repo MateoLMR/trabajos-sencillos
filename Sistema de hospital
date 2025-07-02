@@ -1,0 +1,211 @@
+import javax.swing.*;
+import java.util.*;
+
+class Medico {
+
+    //Atributos de Medico
+    private String nombreCompleto;
+    private String especialidad;
+    private String numeroIdentificacionProfesional;
+    private ArrayList<Paciente> pacientesAtendidos;
+
+    public Medico(String nombreCompleto, String especialidad, String numeroIdentificacionProfesional) {
+        //Constructor
+        this.nombreCompleto = nombreCompleto;
+        this.especialidad = especialidad;
+        this.numeroIdentificacionProfesional = numeroIdentificacionProfesional;
+        this.pacientesAtendidos = new ArrayList<>();
+    }
+
+    // Getters y Setters
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public String getNumeroIdentificacionProfesional() {
+        return numeroIdentificacionProfesional;
+    }
+
+    public ArrayList<Paciente> getPacientesAtendidos() {
+        return pacientesAtendidos;
+    }
+
+    public void atenderPaciente(Paciente paciente) {
+        pacientesAtendidos.add(paciente);
+    }
+
+}
+
+class Paciente {
+
+    //Atributos de Paciente
+    private String nombreCompleto;
+    private int edad;
+    private String sintomas;
+    private String numeroHistoriaClinica;
+
+    public Paciente(String nombreCompleto, int edad, String sintomas, String numeroHistoriaClinica) {
+        //Constructor
+        this.nombreCompleto = nombreCompleto;
+        this.edad = edad;
+        this.sintomas = sintomas;
+        this.numeroHistoriaClinica = numeroHistoriaClinica;
+    }
+
+    // Getters y Setters
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public String getSintomas() {
+        return sintomas;
+    }
+
+    public String getNumeroHistoriaClinica() {
+        return numeroHistoriaClinica;
+    }
+}
+
+public class Hospital {
+
+    //Declaración de cola para pacientes y linkelist para medicos
+    private Queue<Paciente> colaPacientes;
+    private ArrayList<Medico> medicos;
+
+    public Hospital() {
+        //Constructor
+        this.colaPacientes = new LinkedList<>();
+        this.medicos = new ArrayList<>();
+    }
+
+    public void registrarPaciente(Paciente paciente) {
+        colaPacientes.add(paciente);
+        JOptionPane.showMessageDialog(null, "Paciente registrado: " + paciente.getNombreCompleto());
+    }
+
+    public void registrarMedico(Medico medico) {
+        medicos.add(medico);
+        JOptionPane.showMessageDialog(null, "Médico registrado: " + medico.getNombreCompleto());
+    }
+
+    public void asignarPacienteAMedico() {
+        if (colaPacientes.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay pacientes en la cola.");
+            return;
+        }
+
+        Paciente paciente = colaPacientes.peek();
+        for (Medico medico : medicos) {
+            if (medico.getEspecialidad().equalsIgnoreCase(paciente.getSintomas())) {
+                medico.atenderPaciente(paciente);
+                colaPacientes.poll();
+                JOptionPane.showMessageDialog(null, "Paciente " + paciente.getNombreCompleto() + " asignado a " + medico.getNombreCompleto());
+                return;
+            }
+        }
+
+        JOptionPane.showMessageDialog(null, "No hay médicos disponibles para la especialidad de " + paciente.getSintomas());
+    }
+
+    public void mostrarColaPacientes() {
+        if (colaPacientes.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay pacientes en espera.");
+        } else {
+            StringBuilder mensaje = new StringBuilder("Pacientes en espera:\n");
+            for (Paciente paciente : colaPacientes) {
+                mensaje.append(paciente.getNombreCompleto()).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, mensaje.toString());
+        }
+    }
+
+    public void mostrarMedicosYAtendidos() {
+        StringBuilder mensaje = new StringBuilder("Médicos y sus pacientes atendidos:\n");
+        for (Medico medico : medicos) {
+            mensaje.append("Médico: ").append(medico.getNombreCompleto()).append("\n");
+            mensaje.append("Especialidad: ").append(medico.getEspecialidad()).append("\n");
+            mensaje.append("Pacientes Atendidos:\n");
+            for (Paciente paciente : medico.getPacientesAtendidos()) {
+                mensaje.append(paciente.getNombreCompleto()).append("\n");
+            }
+            mensaje.append("\n");
+        }
+        JOptionPane.showMessageDialog(null, mensaje.toString());
+    }
+
+    public void darDeAltaPaciente() {
+        String nombrePaciente = JOptionPane.showInputDialog("Ingrese el nombre del paciente a dar de alta:");
+        for (Medico medico : medicos) {
+            Iterator<Paciente> iterator = medico.getPacientesAtendidos().iterator();
+            while (iterator.hasNext()) {
+                Paciente paciente = iterator.next();
+                if (paciente.getNombreCompleto().equalsIgnoreCase(nombrePaciente)) {
+                    iterator.remove();
+                    JOptionPane.showMessageDialog(null, "Paciente " + nombrePaciente + " dado de alta.");
+                    return;
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Paciente no encontrado.");
+    }
+
+    public static void main(String[] args) {
+        Hospital hospital = new Hospital();
+        boolean continuar = true;
+
+        while (continuar) {
+            String opcion = JOptionPane.showInputDialog("Seleccione una opción:\n"
+                    + "1. Registrar nuevo paciente\n"
+                    + "2. Registrar nuevo médico\n"
+                    + "3. Asignar paciente a médico\n"
+                    + "4. Mostrar cola de pacientes en espera\n"
+                    + "5. Mostrar médicos y sus pacientes atendidos\n"
+                    + "6. Dar de alta a un paciente\n"
+                    + "7. Salir");
+
+            switch (opcion) {
+                case "1":
+                    String nombrePaciente = JOptionPane.showInputDialog("Nombre del paciente:");
+                    int edad = Integer.parseInt(JOptionPane.showInputDialog("Edad del paciente:"));
+                    String sintomas = JOptionPane.showInputDialog("Síntomas del paciente:");
+                    String numeroHistoriaClinica = JOptionPane.showInputDialog("Número de historia clínica:");
+                    Paciente nuevoPaciente = new Paciente(nombrePaciente, edad, sintomas, numeroHistoriaClinica);
+                    hospital.registrarPaciente(nuevoPaciente);
+                    break;
+                case "2":
+                    String nombreMedico = JOptionPane.showInputDialog("Nombre del médico:");
+                    String especialidad = JOptionPane.showInputDialog("Especialidad del médico:");
+                    String numeroIdentificacion = JOptionPane.showInputDialog("Número de identificación profesional:");
+                    Medico nuevoMedico = new Medico(nombreMedico, especialidad, numeroIdentificacion);
+                    hospital.registrarMedico(nuevoMedico);
+                    break;
+                case "3":
+                    hospital.asignarPacienteAMedico();
+                    break;
+                case "4":
+                    hospital.mostrarColaPacientes();
+                    break;
+                case "5":
+                    hospital.mostrarMedicosYAtendidos();
+                    break;
+                case "6":
+                    hospital.darDeAltaPaciente();
+                    break;
+                case "7":
+                    continuar = false;
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Opción no válida.");
+                    break;
+            }
+        }
+    }
+}
