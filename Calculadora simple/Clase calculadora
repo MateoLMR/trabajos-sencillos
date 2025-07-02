@@ -1,0 +1,89 @@
+import javax.swing.JOptionPane;
+
+public class Calculadora {
+
+    //Atributos 
+    int num1, num2;
+    double dem1, dem2;
+    int numint1, numint2, numint3;
+
+    //constructores
+    public Calculadora(int num1, int num2) {
+        this.num1 = num1;
+        this.num2 = num2;
+    }
+
+    public Calculadora(double dem1, double dem2) {
+        this.dem1 = dem1;
+        this.dem2 = dem2;
+    }
+
+    public Calculadora(int numint1, int numint2, int numint3) {
+        this.numint1 = numint1;
+        this.numint2 = numint2;
+        this.numint3 = numint3;
+    }
+
+    //Metodos
+    public void suma(int num1, int num2) {
+        int suma = num1 + num2;
+        JOptionPane.showMessageDialog(null, "El resultado de la suma de dos enteros es: " + suma);
+    }
+
+    public void suma(double dem1, double dem2) {
+        double suma = dem1 + dem2;
+        JOptionPane.showMessageDialog(null, "El resultado de la suma de dos decimales es: " + suma);
+    }
+
+    public void suma(int numint1, int numint2, int numint3) {
+        int suma = numint1 + numint2 + numint3;
+        JOptionPane.showMessageDialog(null, "El resultado de la suma por tres enteros es: " + suma);
+    }
+
+    public void resta(int num1, int num2) {
+        int resta = num1 - num2;
+        JOptionPane.showMessageDialog(null, "El resultado de la resta por dos numeros enteros es: " + resta);
+    }
+
+    public void resta(double dem1, double dem2) {
+        double resta = dem1 - dem2;
+        JOptionPane.showMessageDialog(null, "El resultado de la resta por dos decimales es: " + resta);
+    }
+
+    public void resta(int numint1, int numint2, int numint3) {
+        int resta = numint1 - numint2 - numint3;
+        JOptionPane.showMessageDialog(null, "El resultado de la resta tres enteros  es: " + resta);
+    }
+
+    public void multiplicacion(int num1, int num2) {
+        int multiplicacion = num1 * num2;
+        JOptionPane.showMessageDialog(null, "El resultado de la resta por dos numeros enteros es: " + multiplicacion);
+    }
+
+    public void multiplicacion(double dem1, double dem2) {
+        double multiplicacion = dem1 * dem2;
+        JOptionPane.showMessageDialog(null, "El resultado de la resta por dos decimales es: " + multiplicacion);
+    }
+
+    public void multiplicacion(int numint1, int numint2, int numint3) {
+        int multiplicacion = numint1 * numint2 * numint3;
+        JOptionPane.showMessageDialog(null, "El resultado de la resta tres enteros  es: " + multiplicacion);
+    }
+
+    public void division(int num1, int num2) {
+        double division = num1 / num2;
+        JOptionPane.showMessageDialog(null, "El resultado de la resta por dos numeros enteros es: " + division);
+    }
+
+    public void division(double dem1, double dem2) {
+        double division = dem1 / dem2;
+        JOptionPane.showMessageDialog(null, "El resultado de la resta por dos decimales es: " + division);
+    }
+
+    public void division(int numint1, int numint2, int numint3) {
+        double division = numint1 / numint2 / numint3;
+        JOptionPane.showMessageDialog(null, "El resultado de la resta tres enteros  es: " + division);
+    }
+
+}
+
