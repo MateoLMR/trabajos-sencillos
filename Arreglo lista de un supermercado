@@ -1,0 +1,116 @@
+import java.util.Scanner;
+
+public class tienda {
+
+    String[] tienda;
+    int product, ultProd = 0, primProd = 0;
+    Scanner in = new Scanner(System.in);
+
+    public tienda(int product) {
+        this.product = product;
+        this.tienda = new String[product];
+    }
+
+    public void addProd(String prod) {
+        if (ultProd < product) {
+            tienda[ultProd] = prod;
+            ultProd++;
+            System.out.println("Se agrego el producto: " + prod);
+        } else {
+            System.out.println("El tope de prodcutos fue superado");
+        }
+    }
+
+    public void elimProd(String elim) {
+        for (int i = 0; i < ultProd; i++) {
+            if (tienda[i].equals(elim)) {
+                System.out.println("El producto eliminado es: " + tienda[i]);
+            }
+            for (int j = 0; j < ultProd - 1; j++) {
+                tienda[j] = tienda[j + 1];
+            }
+            ultProd--;
+            break;
+        }
+    }
+
+    public void mostProd() {
+        if (ultProd == 0) {
+            System.out.println("No hay productos");
+        } else {
+            for (int i = 0; i < ultProd; i++) {
+                System.out.println("Los productos son: " + tienda[i]);
+            }
+        }
+    }
+
+    public void buscarProd(String buscar) {
+        for (int i = 0; i < tienda.length; i++) {
+            if (tienda[i].equals(buscar)) {
+                System.out.println("El producto esta");
+                break;
+            } else {
+                System.out.println("El producto no esta");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int product;
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Cuantos productos desea ingresar: ");
+        product = in.nextInt();
+        in.nextLine();
+
+        tienda productos = new tienda(product);
+
+        while (true) {
+            System.out.println("Menu de productos: ");
+            System.out.println("1: Ingresar nombre de producto");
+            System.out.println("2: eliminar producto");
+            System.out.println("3: Mostrar todos los productos");
+            System.out.println("4: Buscar producto");
+            System.out.println("5: Salir");
+
+            System.out.println("Elija una opcion");
+            int opcion = in.nextInt();
+            in.nextLine();
+            switch (opcion) {
+
+                case 1: {
+                    System.out.println("Agregue nombre del producto: ");
+                    String prod = in.nextLine();
+                    productos.addProd(prod);
+                    break;
+                }
+                case 2: {
+                    System.out.println("Ingrese nombre del producto a elminar: ");
+                    String elim = in.nextLine();
+                    productos.elimProd(elim);
+                    break;
+                }
+                case 3: {
+                    productos.mostProd();
+                    break;
+                }
+                case 4: {
+                    System.out.println("Ingrese Producto a buscar: ");
+                    String buscar = in.nextLine();
+                    productos.buscarProd(buscar);
+                    break;
+                }
+                case 5: {
+                    System.out.println("Saliendo del programa...");
+                    in.close();
+                    return;
+                }
+                default:
+                    System.out.println("Opcion no valida. Intente nuevamente");
+                    break;
+            }
+
+        }
+    }
+
+}
