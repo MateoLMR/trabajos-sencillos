@@ -1,0 +1,171 @@
+import java.util.Scanner;
+
+public class tallermetodosdeordenamiento {
+
+    //Se inicializa y se instancia el arrelgo en un metodo
+    public static int[] Arreglo() {
+        int[] arreglo = new int[20];
+
+        for (int i = 0; i < arreglo.length; i++) {
+            arreglo[i] = (int) (Math.random() * 100 + 1);
+        }
+        //se retorna el arreglo al main
+        return arreglo;
+    }
+
+    //Se crea el metodo de ordenamiento burbuja
+    public static void burbuja(int[] arr) {
+
+        int n = arr.length;
+        int temp = 0;
+	//Se calcula el tiempo de ejecución antes de hacerlo
+        long inicio = System.nanoTime();
+        for (int i = 0; i < n; i++) {
+            for (int x = 1; x < (n - i); x++) {
+                if (arr[x - 1] > arr[x]) {
+                    temp = arr[x - 1];
+                    arr[x - 1] = arr[x];
+                    arr[x] = temp;
+                }
+            }
+        }
+	//y después de hacerlo, se imprime con el calculo
+        long fin = System.nanoTime();
+        System.out.println("Tiempo de ejecución por metodo burbuja: " + (fin - inicio) / 1e6 + " ms");
+    }
+
+    //Se crea el metodo de ordenamiento por insercion
+    public static void insercion(int[] arr) {
+
+        int n = arr.length;
+
+        long inicio = System.nanoTime();
+        for (int i = 0; i < n; i++) {
+            int key = arr[i];
+            int j = i - 1;
+
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j = j - 1;
+            }
+            arr[j + 1] = key;
+        }
+        long fin = System.nanoTime();
+        System.out.println("Tiempo de ejecución por metodo insercion: " + (fin - inicio) / 1e6 + " ms");
+    }
+
+    //Se crea el metodo de ordenamiento seleccion
+    static void seleccion(int[] arr) {
+        int n = arr.length;
+
+        long inicio = System.nanoTime();
+        for (int i = 0; i < n - 1; i++) {
+
+            int minIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[minIndex]) {
+                    minIndex = j;
+                }
+            }
+            int temp = arr[minIndex];
+            arr[minIndex] = arr[i];
+            arr[i] = temp;
+        }
+        long fin = System.nanoTime();
+        System.out.println("Tiempo de ejecución por metodo seleccion: " + (fin - inicio) / 1e6 + " ms");
+    }
+
+    //Se crea el metodo de busqueda binario llamado robocop #barras como diria camilo
+    public static int robocop(int[] arr, int num) {
+        int izquierda = 0;
+        int derecha = arr.length - 1;
+
+        while (izquierda <= derecha) {
+            int medio = izquierda + (derecha - izquierda) / 2;
+            if (arr[medio] == num) {
+                return medio;
+            }
+            if (arr[medio] < num) {
+                izquierda = medio + 1;
+            } else {
+                derecha = medio - 1;
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+
+        //Se importa la libreria scanner
+        Scanner in = new Scanner(System.in);
+        //se crea un arreglo en el main que almacene el arreglo del metodo
+        int[] arr = Arreglo();
+        int opcion;
+
+        //se imprime el arreglo antes de ordenarlo
+        System.out.println("El arreglo antes del ordenamiento");
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+
+        //Se hace un do-while para el menu para que pueda mostrar de nuevo el menu las veces que desee el usuario 
+        do {
+            System.out.println();
+            System.out.println("Opcion 1: metodo burbuja");
+            System.out.println("Opcion 2: metodo de insercion");
+            System.out.println("Opcion 3: metodo de seleccion");
+            System.out.println("Opcion 4: Busqueda");
+            System.out.println("Opcion 5: salir");
+
+            System.out.println("Seleccione una opcion de ordenamiento:");
+            opcion = in.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    System.out.println("El arreglo ordenado por el metodo burbuja es:");
+                    burbuja(arr);
+                    double tiempofin = System.currentTimeMillis();
+                    for (int i = 0; i < arr.length; i++) {
+                        System.out.print(arr[i] + " ");
+                    }
+                    break;
+                case 2:
+                    insercion(arr);
+                    System.out.println("El arreglo ordenado por el metodo inserccion es:");
+                    for (int i = 0; i < arr.length; i++) {
+                        System.out.print(arr[i] + " ");
+                    }
+                    break;
+                case 3:
+                    seleccion(arr);
+                    System.out.println("El arreglo ordenado por el metodo seleccion es:");
+                    for (int i = 0; i < arr.length; i++) {
+                        System.out.print(arr[i] + " ");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Ingrese el numero a buscar: ");
+                    int num = in.nextInt();
+                    int resultado = robocop(arr, num);
+
+                    if (resultado != -1) {
+                        System.out.println("El elemento " + num + " se encuentra en la posicion " + resultado);
+
+                    } else {
+                        System.out.println("El elemento " + num + " no se encuentra ");
+                    }
+                    break;
+                case 5:
+                    System.out.println("Saliendo del programa...");
+                    break;
+                default:
+                    System.out.println("Opcion no valida, intente nuevamente.");
+            }
+
+            //se condiciona el while con opcion diferente a 5 para repetir el bucle si no escoje la opcion de salir
+        } while (opcion != 5);
+
+        in.close();
+    }
+
+}
