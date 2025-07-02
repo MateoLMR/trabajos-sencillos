@@ -1,0 +1,128 @@
+import javax.swing.JOptionPane;
+
+public class mainCalculadora {
+
+    public static void main(String[] args) {
+        //llamamos a la clase enviandole valor 0  para que el usuario pueda decidir el numero
+        Calculadora cal = new Calculadora(0, 0);
+        //creamos las variables 
+        int option;
+        int num1, num2;
+        double dem1, dem2;
+        int numint1, numint2, numint3;
+
+        //creamos el menu para que el usuario decida que quiere usar en la calculadora
+        do {
+            String menu = """
+            Calculadora:
+            1: Suma de dos enteros
+            2: suma de decimales
+            3: suma de tres enteros
+            4: resta de dos enteros
+            5: resta de dos decimales
+            6: resta de tres enteros
+            7: multiplicacion de dos enteros
+            8: multiplicacion de dos decimales
+            9: multiplicacion de tres enteros
+            10: division de dos enteros
+            11: division de dos decimales
+            12: division de tres enteros
+            13: salir
+            """;
+
+            String opcion = JOptionPane.showInputDialog(null, menu + " ", JOptionPane.QUESTION_MESSAGE);
+            option = Integer.parseInt(opcion);
+
+            switch (option) {
+                case 1: {
+                    num1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el primer numero a sumar "));
+                    num2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el segundo numero a sumar "));
+                    cal.suma(num1, num2);
+                    break;
+                }
+                case 2: {
+                    dem1 = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el primer decimal a sumar"));
+                    dem2 = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el primer decimal a sumar"));
+                    cal.suma(dem1, dem2);
+                    break;
+                }
+                case 3: {
+                    numint1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el primer numero a sumar "));
+                    numint2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el segundo numero a sumar "));
+                    numint3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el tercer numero a sumar "));
+                    cal.suma(numint1, numint2, numint3);
+                    break;
+                }
+                case 4: {
+                    num1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el primer numero a restar "));
+                    num2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el segundo numero a restar "));
+                    cal.resta(num1, num2);
+                    break;
+                }
+                case 5: {
+                    dem1 = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el primer decimal a restar"));
+                    dem2 = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el primer decimal a restar"));
+                    cal.resta(dem1, dem2);
+                    break;
+                }
+                case 6: {
+                    numint1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el primer numero a restar "));
+                    numint2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el segundo numero a restar "));
+                    numint3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el tercer numero a restar "));
+                    cal.resta(numint1, numint2, numint3);
+                    break;
+                }
+                case 7: {
+                    num1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el primer numero a multiplicar "));
+                    num2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el segundo numero a multiplicar "));
+                    cal.multiplicacion(num1, num2);
+                    break;
+                }
+                case 8: {
+                    dem1 = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el primer decimal a multiplicar"));
+                    dem2 = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el primer decimal a multiplicar"));
+                    cal.multiplicacion(dem1, dem2);
+                    break;
+                }
+                case 9: {
+                    numint1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el primer numero a multiplicar "));
+                    numint2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el segundo numero a multiplicar "));
+                    numint3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el tercer numero a multiplicar "));
+                    cal.multiplicacion(numint1, numint2, numint3);
+                    break;
+                }
+                case 10: {
+                    num1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el primer numero a dividir "));
+                    num2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el segundo numero a dividir "));
+                    cal.division(num1, num2);
+                    break;
+                }
+                case 11: {
+                    dem1 = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el primer decimal a dividir"));
+                    dem2 = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el primer decimal a dividir"));
+                    cal.division(dem1, dem2);
+                    break;
+                }
+                case 12: {
+                    numint1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el primer numero a dividir "));
+                    numint2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el segundo numero a dividir "));
+                    numint3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el tercer numero a dividir "));
+                    cal.division(numint1, numint2, numint3);
+                    break;
+                }
+                case 13: {
+                    JOptionPane.showMessageDialog(null, "Saliendo de la calculadora....");
+                    System.exit(0);
+                    return;
+                }
+                default: {
+                    JOptionPane.showMessageDialog(null, "Numero de decision invalido", " ", JOptionPane.WARNING_MESSAGE);
+                    break;
+                }
+
+            }
+
+        } while (option != 13);
+        System.exit(0);
+    }
+}
