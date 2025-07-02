@@ -1,0 +1,36 @@
+ public static void main(String[] args) {
+        
+        Scanner scanner = new Scanner(System.in);
+        //instanciar el arreglo
+        double[][] gastos = new double[1][7]; 
+
+        // Permitir al usuario ingresar los gastos diarios
+        System.out.println("Ingrese sus gastos diarios para la semana:");
+        for (int i = 0; i < 7; i++) {
+            System.out.print("Gasto del día " + (i + 1) + ": ");
+            gastos[0][i] = scanner.nextDouble();
+        }
+
+        // Calcular el gasto total semanal
+        double gastoTotal = 0;
+        for (int i = 0; i < 7; i++) {
+            gastoTotal += gastos[0][i];
+        }
+        System.out.println("El gasto total semanal es:" + gastoTotal);
+
+        // Calcular el promedio diario de gastos
+        double promDiario = gastoTotal / 7;
+        System.out.println("El promedio diario de gastos es:" + promDiario);
+
+        // Determinar el día con el gasto más alto
+        double maxGasto = gastos[0][0];
+        int diaMaxGasto = 0;
+        for (int i = 1; i < 7; i++) {
+            if (gastos[0][i] > maxGasto) {
+                maxGasto = gastos[0][i];
+                diaMaxGasto = i;
+            }
+        }
+        System.out.println("El día con el gasto más alto es el día " + (diaMaxGasto + 1) + " con " + maxGasto);
+    }
+}
