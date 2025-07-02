@@ -1,0 +1,114 @@
+class ListaEnlazada {
+
+    Nodo cabeza;
+
+    //creando otro constructor
+    public ListaEnlazada() {
+        this.cabeza = null;
+    }
+
+    public void insertar(int dato) {
+        //creando un objeto de tipo nodo que va a conseguir un tipo nodo dato
+        Nodo nuevoNodo = new Nodo(dato);
+        if (cabeza == null) {
+            cabeza = nuevoNodo;
+        } else {
+            Nodo actual = cabeza;
+            while (actual.siguiente != null) {
+                actual = actual.siguiente;
+            }
+            actual.siguiente = nuevoNodo;
+        }
+    }
+
+    public Nodo[] Buscar(int dato) {
+        Nodo actual = cabeza;
+        int count = 0;
+        while (actual != null) {
+            if (actual.dato == dato) {
+                count++;
+            }
+            actual = actual.siguiente;
+        }
+
+        if (count == 0) {
+            return null;
+        }
+
+        Nodo[] nodos = new Nodo[count];
+        actual = cabeza;
+        int index = 0;
+        while (actual != null) {
+            if (actual.dato == dato) {
+                nodos[index++] = actual;
+            }
+            actual = actual.siguiente;
+        }
+        return nodos;
+    }
+
+    public int actualizar(int old, int New) {
+        Nodo actual = cabeza;
+        int count = 0;
+        while (actual != null) {
+            if (actual.dato == old) {
+                actual.dato = New;
+                count++;
+            }
+            actual = actual.siguiente;
+        }
+        return count;
+    }
+
+    public int eliminar(int dato) {
+
+        int count = 0;
+        while (cabeza != null && cabeza.dato == dato) {
+            cabeza = cabeza.siguiente;
+            count++;
+        }
+        if (cabeza == null) {
+            return count;
+        }
+        Nodo actual = cabeza;
+        while (actual.siguiente != null) {
+            if (actual.siguiente.dato == dato) {
+                actual.siguiente = actual.siguiente.siguiente;
+                count++;
+            } else {
+                actual = actual.siguiente;
+            }
+        }
+        return count;
+    }
+
+    public boolean inserta(int dato) {
+        Nodo nuevoNodo = new Nodo(dato);
+        if (cabeza == null) {
+            cabeza = nuevoNodo;
+            return false;
+        }
+        boolean duplicado = false;
+        Nodo actual = cabeza;
+        while (actual.siguiente != null) {
+            if (actual.dato == dato) {
+                duplicado = true;
+            }
+            actual = actual.siguiente;
+        }
+        if (actual.dato == dato) {
+            duplicado = true;
+        }
+        actual.siguiente = nuevoNodo;
+        return !duplicado;
+    }
+
+    public void imprimir() {
+        Nodo actual = cabeza;
+        while (actual != null) {
+            System.out.print(actual.dato + " -> ");
+            actual = actual.siguiente;
+        }
+        System.out.println("null");
+    }
+}
