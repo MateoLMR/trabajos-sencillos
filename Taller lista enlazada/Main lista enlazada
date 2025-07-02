@@ -1,0 +1,81 @@
+import java.util.Scanner;
+public class ListasEnlazada {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int opcion;
+        int valores;
+        ListaEnlazada lista = new ListaEnlazada();
+
+	
+	//Menu
+        do {
+            System.out.println();
+            System.out.println("Opcion 1: Insertar valores");
+            System.out.println("Opcion 2: Buscar");
+            System.out.println("Opcion 3: Actualizar");
+            System.out.println("Opcion 4: Eliminar");
+            System.out.println("opcion 5: Salir");
+
+            System.out.println("Seleccione la opcion que desee");
+            opcion = in.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    // Insertar valores
+                    System.out.println("Ingrese valores");
+                    valores = in.nextInt();
+                    lista.insertar(valores);
+                    System.out.println("Valor insertado. La lista actual es:");
+                    lista.imprimir();
+                    break;
+                case 2:
+                    // Buscar un elemento
+                    System.out.println("Ingrese valor a buscar");
+                    int valorBuscar = in.nextInt();
+                    Nodo[] nodosEncontrados = lista.Buscar(valorBuscar);
+                    if (nodosEncontrados != null) {
+                        System.out.println("Se encontraron " + nodosEncontrados.length
+                                + " ocurrencias del valor " + valorBuscar);
+                    } else {
+                        System.out.println("No se encontró el valor " + valorBuscar);
+                    }
+                    break;
+                case 3:
+                    // Actualizar elementos
+
+                    System.out.println("Ingrese valor viejo");
+                    int old = in.nextInt();
+
+                    System.out.println("Ingrese valor nuevo");
+                    int New = in.nextInt();
+
+                    int actualizados = lista.actualizar(old, New);
+                    System.out.println("Se actualizaron " + actualizados
+                            + " elementos de " + old + " a " + New);
+
+                    System.out.println("Lista después de actualizar:");
+                    lista.imprimir();
+                    break;
+                case 4:
+                    // Eliminar un elemento
+                    System.out.println("Ingrese valor a eliminar");
+                    int valorEliminar = in.nextInt();
+                    int eliminados = lista.eliminar(valorEliminar);
+                    System.out.println("Se eliminaron " + eliminados
+                            + " ocurrencias del valor " + valorEliminar);
+
+                    System.out.println("Lista final:");
+                    lista.imprimir();
+                    break;
+                case 5:
+                    System.out.println("Saliendo del programa");
+                    break;
+                default:
+                    System.out.println("Opcion no valida. Intente nuevamente");
+            }
+	//El while para salir del menu
+        } while (opcion != 5);
+        in.close();
+    }
+}
